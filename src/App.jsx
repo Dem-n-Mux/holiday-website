@@ -1,10 +1,19 @@
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import MainLayout from "./layout/MainLayout"
+import Landing from "./pages/Landing";
 
 function App() {
 
   return (
-    <div>
-      <h1 className='text-lg font-bold'>Initial Commit</h1>
-    </div>
+    <>
+      <Router>
+        <Routes>
+          <Route element={<MainLayout />}>
+            <Route path="/" index element={<Landing />}/>
+          </Route>
+        </Routes>
+      </Router>
+    </>
   )
 }
 
