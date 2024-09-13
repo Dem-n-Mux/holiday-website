@@ -6,20 +6,25 @@ export const useMainContext = () => useContext(MainContext);
 
 const MainContextProvider = ({ children }) => {
   const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async (path) => {
-      if(path === "/") {
+      setLoading(true);
+      if (path === "/") {
         const slider = await fetchSliderData();
-        setData({slider});
+        setData({ slider });
       }
-    }
+      setLoading(false);
+    };
 
     fetchData(window.location.pathname);
-  },[window.location.pathname]);
+  }, [window.location.pathname]);
 
   return (
-    <MainContext.Provider value={data}>{children}</MainContext.Provider>
+    <MainContext.Provider value={data}>
+      {loading ? <div>Loading</div> : children}
+    </MainContext.Provider>
   );
 };
 
