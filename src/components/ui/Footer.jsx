@@ -1,6 +1,7 @@
 import { Button, Input } from 'antd'
 import React from 'react'
-import { FaFacebook, FaInstagram, FaLinkedin, FaWhatsapp, FaYoutube } from 'react-icons/fa'
+import { FaFacebook, FaInstagram, FaLinkedin, FaWhatsapp, FaYoutube } from 'react-icons/fa';
+import Logo from "../../assets/logo.png";
 
 const Footer = () => {
   return (
@@ -20,7 +21,7 @@ const Footer = () => {
         </div>
         <div className='grid grid-cols-12 gap-6'> 
           <div className='col-span-3 space-y-4 flex flex-col'>
-            <h1 className='text-2xl font-semibold text-foreground'>Fly High Travels</h1>
+            <img src={Logo} alt="logo" className='w-44' />
             <p className='text-sm'>Your convenience is our priority. We <br/> provide our customers with best service for <br/> a perfect holiday experience!</p>
             <div className='flex flex-row justify-between w-full'>
               <FaInstagram size={35} className='text-foreground' />

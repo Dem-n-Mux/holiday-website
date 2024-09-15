@@ -7,6 +7,7 @@ export default {
         primary: "#000000",
         foreground: "#4a4a4a",
         secondary: "#0e3957",
+        active: "#0e3957"
       },
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
