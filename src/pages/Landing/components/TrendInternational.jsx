@@ -55,7 +55,7 @@ const TrendInternational = ({ data }) => {
 const DestinationSlide = ({ places, isTransitioning }) => {
   return (
     <div
-      className={`flex flex-row justify-between items-center gap-24 w-full transition-opacity duration-500 ${
+      className={`flex flex-row justify-between items-center gap-40 w-full transition-opacity duration-500 ${
         isTransitioning ? "opacity-0" : "opacity-100"
       }`}
     >
@@ -63,7 +63,7 @@ const DestinationSlide = ({ places, isTransitioning }) => {
         <img
           src={places[0].values.img}
           alt={places[0].values.title}
-          className="rounded-full w-[200px] h-[200px]"
+          className="rounded-full w-[240px] h-[240px]"
         />
         <h1 className="text-4xl text-foreground font-playfair">
           {places[0].values.title}
@@ -73,7 +73,7 @@ const DestinationSlide = ({ places, isTransitioning }) => {
         <img
           src={places[1].values.img}
           alt={places[1].values.title}
-          className="rounded-t-full rounded-b-xl w-[500px] h-[500px]"
+          className="rounded-t-full rounded-b-xl w-[500px] h-[500px] border-b-2 pb-2"
         />
         <h1 className="text-4xl text-foreground font-playfair">
           {places[1].values.title}
@@ -86,7 +86,7 @@ const DestinationSlide = ({ places, isTransitioning }) => {
         <img
           src={places[2].values.img}
           alt={places[2].values.title}
-          className="rounded-full w-[200px] h-[200px]"
+          className="rounded-full w-[240px] h-[240px]"
         />
       </div>
     </div>
