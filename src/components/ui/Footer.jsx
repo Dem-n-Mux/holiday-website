@@ -1,10 +1,11 @@
 import { Button, Input } from 'antd'
 import React from 'react'
-import { FaFacebook, FaInstagram, FaLinkedin, FaWhatsapp, FaYoutube } from 'react-icons/fa'
+import { FaFacebook, FaInstagram, FaLinkedin, FaWhatsapp, FaYoutube } from 'react-icons/fa';
+import Logo from "../../assets/logo.png";
 
 const Footer = () => {
   return (
-    <div className='w-full p-2'>
+    <div className='w-full p-2 mt-16'>
       <div className='mx-auto max-w-[82rem] border-t border-b px-4 py-8 space-y-12 border-primary'>
         <div className='grid grid-cols-10 gap-4'>
           <div className='col-span-10 md:col-span-5 space-y-8'>
@@ -20,7 +21,7 @@ const Footer = () => {
         </div>
         <div className='grid grid-cols-12 gap-6'> 
           <div className='col-span-3 space-y-4 flex flex-col'>
-            <h1 className='text-2xl font-semibold text-foreground'>Fly High Travels</h1>
+            <img src={Logo} alt="logo" className='w-44' />
             <p className='text-sm'>Your convenience is our priority. We <br/> provide our customers with best service for <br/> a perfect holiday experience!</p>
             <div className='flex flex-row justify-between w-full'>
               <FaInstagram size={35} className='text-foreground' />
