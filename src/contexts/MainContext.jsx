@@ -19,9 +19,14 @@ const MainContextProvider = ({ children }) => {
         const reviews = await fetchReviewData();
         setData({ slider, themeSlider, intTrends, reviews });
       }
+
+      if(path === "/about") {
+        const reviews = await fetchReviewData();
+        setData({ reviews });
+      }
+  
       setLoading(false);
     };
-
     fetchData(window.location.pathname);
   }, [window.location.pathname]);
 
