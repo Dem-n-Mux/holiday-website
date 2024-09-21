@@ -5,6 +5,8 @@ import HolidayMood from './components/HolidayMood';
 import TrendInternational from './components/TrendInternational';
 import Benefits from './components/Benefits';
 import TrendIndia from './components/TrendIndia';
+import ReviewCarousel from '../../components/global/ReviewCarousel';
+import FollowUs from '../../components/global/FollowUs';
 
 const Landing = () => {
   const data = useMainContext();
@@ -17,7 +19,9 @@ const Landing = () => {
       <HolidayMood data={data?.themeSlider} />
       <TrendInternational data={data?.intTrends} />
       <TrendIndia />
+      <ReviewCarousel data={data?.reviews} />
       <Benefits />
+      <FollowUs />
     </div>
   )
 }

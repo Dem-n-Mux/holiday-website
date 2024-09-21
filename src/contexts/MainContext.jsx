@@ -1,5 +1,6 @@
 import { useContext, createContext, useState, useEffect } from "react";
 import { fetchInternationalDests, fetchSliderData, fetchThemeSlideData } from "../repository/HomeRepo";
+import { fetchReviewData } from "../repository/ReviewRepo";
 
 const MainContext = createContext();
 export const useMainContext = () => useContext(MainContext);
@@ -15,7 +16,8 @@ const MainContextProvider = ({ children }) => {
         const slider = await fetchSliderData();
         const themeSlider = await fetchThemeSlideData();
         const intTrends = await fetchInternationalDests();
-        setData({ slider, themeSlider, intTrends });
+        const reviews = await fetchReviewData();
+        setData({ slider, themeSlider, intTrends, reviews });
       }
       setLoading(false);
     };

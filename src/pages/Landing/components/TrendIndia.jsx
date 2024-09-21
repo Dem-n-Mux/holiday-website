@@ -1,5 +1,5 @@
 import { Button } from "antd";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const data = [
   {
