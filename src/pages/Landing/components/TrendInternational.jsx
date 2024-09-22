@@ -1,9 +1,9 @@
 import { Button } from "antd";
 import React, { useEffect, useState } from "react";
 
-const TrendInternational = ({ data }) => {
+const TrendInternational = ({ data = [] }) => {
   const [activeRegion, setActiveRegion] = useState("asia");
-  const [places, setPlaces] = useState(data[0].places);
+  const [places, setPlaces] = useState(data[0]?.places || []);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
   const handleRegionChange = (item) => {
@@ -61,31 +61,31 @@ const DestinationSlide = ({ places, isTransitioning }) => {
     >
       <div className="w-1/4 flex flex-col items-center gap-4 mb-40">
         <img
-          src={places[0].values.img}
-          alt={places[0].values.title}
+          src={places[0]?.values.img}
+          alt={places[0]?.values.title}
           className="rounded-full w-[240px] h-[240px]"
         />
         <h1 className="text-4xl text-foreground font-playfair">
-          {places[0].values.title}
+          {places[0]?.values.title}
         </h1>
       </div>
       <div className="w-1/2 flex flex-col items-start gap-4">
         <img
-          src={places[1].values.img}
-          alt={places[1].values.title}
+          src={places[1]?.values.img}
+          alt={places[1]?.values.title}
           className="rounded-t-full rounded-b-xl w-[500px] h-[500px] border-b-2 pb-2"
         />
         <h1 className="text-4xl text-foreground font-playfair">
-          {places[1].values.title}
+          {places[1]?.values.title}
         </h1>
       </div>
       <div className="w-1/4 flex flex-col items-center gap-4 mt-40">
         <h1 className="text-4xl text-foreground font-playfair">
-          {places[2].values.title}
+          {places[2]?.values.title}
         </h1>
         <img
-          src={places[2].values.img}
-          alt={places[2].values.title}
+          src={places[2]?.values.img}
+          alt={places[2]?.values.title}
           className="rounded-full w-[240px] h-[240px]"
         />
       </div>
