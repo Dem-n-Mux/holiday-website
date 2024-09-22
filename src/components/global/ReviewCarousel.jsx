@@ -16,7 +16,7 @@ const ReviewCarousel = ({ data }) => {
         modules={[Pagination, Autoplay]}
         spaceBetween={0}
         slidesPerView={1}
-        navigation
+        navigation={false}
         pagination={{ clickable: true }}
         autoplay={{ delay: 10000, disableOnInteraction: false }}
       >

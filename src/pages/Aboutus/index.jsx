@@ -5,6 +5,7 @@ import { useMainContext } from '../../contexts/MainContext'
 import ReviewCarousel from '../../components/global/ReviewCarousel'
 import WhyTravel from './components/WhyTravel'
 import WhatWeDo from './components/WhatWeDo'
+import FoundingTeam from './components/FoundingTeam'
 
 const AboutUs = () => {
   const data = useMainContext();
@@ -14,6 +15,7 @@ const AboutUs = () => {
       <WhoWeAre />
       <WhyTravel />
       <WhatWeDo />
+      <FoundingTeam data={data?.team} />
       <ReviewCarousel data={data?.reviews} />
     </div>
   )

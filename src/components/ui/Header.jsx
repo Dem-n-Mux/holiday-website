@@ -10,7 +10,7 @@ const Header = () => {
         <div className='flex flex-row justify-between items-center'>
           <img src={Logo} alt="logo" className='h-12' />
           <div className='flex flex-row gap-20 justify-center'>
-            <Link to={"/"} className='font-extralight text-white text-md'>Home</Link>
+            <Link to={"/home"} className='font-extralight text-white text-md'>Home</Link>
             <Link to={"/about "} className='font-extralight text-white text-md'>About us</Link>
             <Link className='font-extralight text-white text-md'>Careers</Link>
             <Link className='font-extralight text-white text-md'>Blogs</Link>
