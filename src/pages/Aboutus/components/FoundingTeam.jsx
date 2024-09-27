@@ -8,7 +8,7 @@ import { LuChevronLeft, LuChevronRight } from 'react-icons/lu';
 const FoundingTeam = ({ data }) => {
   return (
     <div className="container w-full flex flex-col gap-16 items-center">
-      <h1 className="text-7xl font-playfair text-primary">Founding Team</h1>
+      <h1 className="text-7xl font-playfair text-foreground">Founding Team</h1>
       <div className="w-full relative">
         <Swiper
           modules={[Navigation]}

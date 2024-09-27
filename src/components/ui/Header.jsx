@@ -21,7 +21,7 @@ const Header = () => {
             <Link to={"/about "} className="font-extralight text-white text-md">
               About us
             </Link>
-            <Link className="font-extralight text-white text-md">Careers</Link>
+            <Link to={"/careers"} className="font-extralight text-white text-md">Careers</Link>
             <Link className="font-extralight text-white text-md">Blogs</Link>
             <div
               onClick={() => setShowThemes((prev) => !prev)}
