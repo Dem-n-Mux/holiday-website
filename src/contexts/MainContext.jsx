@@ -44,6 +44,11 @@ const MainContextProvider = ({ children }) => {
         setData({ themeData, themeIdData, reviews, themePackages });
       }
 
+      if(path === "/careers") {
+        const team = await fetchTeamData();
+        setData({ team, themeData });
+      }
+
       setLoading(false);
     };
     fetchData(location.pathname);
