@@ -8,6 +8,10 @@ import {
 import { fetchReviewData } from "../repository/ReviewRepo";
 import { fetchTeamData } from "../repository/TeamRepo";
 import { fetchThemeData, fetchThemePackages } from "../repository/ThemeRepo";
+import {
+  fetchInternationalCards,
+  fetchDomesticCards,
+} from "../repository/DestinationRepo";
 
 const MainContext = createContext();
 export const useMainContext = () => useContext(MainContext);
@@ -16,37 +20,60 @@ const MainContextProvider = ({ children }) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const location = useLocation();
-  const {themeId} = useParams();
+  const { themeId } = useParams();
 
   useEffect(() => {
     const fetchData = async (path) => {
       setLoading(true);
       const themeData = await fetchThemeSlideData();
+      const internationalCards = await fetchInternationalCards();
+      const domesticCards = await fetchDomesticCards();
       if (path === "/" || path === "/home") {
         const slider = await fetchSliderData();
         const themeSlider = await fetchThemeSlideData();
         const intTrends = await fetchInternationalDests();
         const reviews = await fetchReviewData();
-        setData({ slider, themeSlider, intTrends, reviews, themeData });
+        setData({
+          slider,
+          themeSlider,
+          intTrends,
+          reviews,
+          themeData,
+          internationalCards,
+          domesticCards,
+        });
       }
 
       if (path === "/about") {
         const reviews = await fetchReviewData();
         const team = await fetchTeamData();
-        setData({ reviews, team, themeData });
+        setData({
+          reviews,
+          team,
+          themeData,
+          internationalCards,
+          domesticCards,
+        });
       }
 
-      if(path.includes("/theme")) {
+      if (path.includes("/theme")) {
         console.log(themeId);
         const themeIdData = await fetchThemeData(themeId);
         const reviews = await fetchReviewData();
         const themePackages = await fetchThemePackages(themeId);
-        setData({ themeData, themeIdData, reviews, themePackages });
+        setData({
+          themeData,
+          themeIdData,
+          reviews,
+          themePackages,
+          internationalCards,
+          domesticCards,
+        });
       }
 
-      if(path === "/careers") {
+      if (path === "/careers") {
         const team = await fetchTeamData();
-        setData({ team, themeData });
+        setData({ team, themeData, internationalCards, domesticCards });
       }
 
       setLoading(false);
