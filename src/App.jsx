@@ -18,6 +18,7 @@ function App() {
               <Route path="/about" element={<AboutUs /> } />
               <Route path="/careers" element={<Careers />} />
               <Route path="/theme/:themeId" element={<ThemePage />} />
+              <Route path="/destination/:regionId/:placeId" />
             </Route>
           </Routes>
         </AntThemeProvider>
