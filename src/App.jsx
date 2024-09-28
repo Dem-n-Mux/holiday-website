@@ -5,6 +5,7 @@ import Landing from "./pages/Landing";
 import AboutUs from "./pages/Aboutus";
 import ThemePage from "./pages/Theme";
 import Careers from "./pages/Careers";
+import DestinationPage from "./pages/Destination";
 
 function App() {
   return (
@@ -18,7 +19,8 @@ function App() {
               <Route path="/about" element={<AboutUs /> } />
               <Route path="/careers" element={<Careers />} />
               <Route path="/theme/:themeId" element={<ThemePage />} />
-              <Route path="/destination/:regionId/:placeId" />
+              <Route path="/domestic/:regionId/:placeId" element={<DestinationPage />} />
+              <Route path="/international/:regionId/:placeId" element={<DestinationPage />} />
             </Route>
           </Routes>
         </AntThemeProvider>

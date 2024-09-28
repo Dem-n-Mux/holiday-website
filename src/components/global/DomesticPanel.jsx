@@ -10,7 +10,8 @@ const DomesticPanel = ({ data }) => {
           <div className="flex flex-row gap-6 flex-wrap">
             {region.places.map((place, index) => (
               <Link
-                to={`/destination/${region.id}/${place.title.toLowerCase()}`}
+                to={`/domestic/${region.id}/${place.title.toLowerCase()}`}
+                state={place}
                 key={index}
                 className="flex flex-col items-center gap-1"
               >
