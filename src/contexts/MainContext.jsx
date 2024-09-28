@@ -11,6 +11,7 @@ import { fetchThemeData, fetchThemePackages } from "../repository/ThemeRepo";
 import {
   fetchInternationalCards,
   fetchDomesticCards,
+  fetchDestinationData,
 } from "../repository/DestinationRepo";
 
 const MainContext = createContext();
@@ -20,7 +21,7 @@ const MainContextProvider = ({ children }) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const location = useLocation();
-  const { themeId } = useParams();
+  const { themeId, regionId, placeId } = useParams();
 
   useEffect(() => {
     const fetchData = async (path) => {
@@ -66,6 +67,30 @@ const MainContextProvider = ({ children }) => {
           themeIdData,
           reviews,
           themePackages,
+          internationalCards,
+          domesticCards,
+        });
+      }
+
+      if (path.includes("/international")) {
+        const destinationData = await fetchDestinationData(false, regionId, placeId);
+        const reviews = await fetchReviewData();
+        setData({
+          reviews,
+          destinationData,
+          themeData,
+          internationalCards,
+          domesticCards,
+        });
+      }
+
+      if (path.includes("/domestic")) {
+        const destinationData =  await fetchDestinationData(true, regionId, placeId);
+        const reviews = await fetchReviewData();
+        setData({
+          reviews,
+          destinationData,
+          themeData,
           internationalCards,
           domesticCards,
         });
