@@ -1,11 +1,15 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AntThemeProvider from "./providers/ant-theme-provider";
-import MainLayout from "./layout/MainLayout";
+
 import Landing from "./pages/Landing";
 import AboutUs from "./pages/Aboutus";
 import ThemePage from "./pages/Theme";
 import Careers from "./pages/Careers";
 import DestinationPage from "./pages/Destination";
+import AdminPanel from "./pages/AdminPanel";
+
+import MainLayout from "./layout/MainLayout";
+import AuthLayout from "./layout/AuthLayout";
 
 function App() {
   return (
@@ -21,6 +25,10 @@ function App() {
               <Route path="/theme/:themeId" element={<ThemePage />} />
               <Route path="/domestic/:regionId/:placeId" element={<DestinationPage />} />
               <Route path="/international/:regionId/:placeId" element={<DestinationPage />} />
+            </Route>
+
+            <Route element={<AuthLayout />}>
+              <Route path="/admin" element={<AdminPanel />} />
             </Route>
           </Routes>
         </AntThemeProvider>
