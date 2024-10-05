@@ -5,6 +5,7 @@ import { BsAirplane, BsCarFront, BsHouse, BsPerson } from "react-icons/bs";
 import { Button } from "antd";
 
 const PackageListing = ({ data, id }) => {
+  console.log(data);
   return (
     <div className="container w-full flex flex-col gap-24 items-center">
       <div className="flex flex-col gap-4 items-center">

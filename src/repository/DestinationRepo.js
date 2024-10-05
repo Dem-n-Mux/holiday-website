@@ -14,7 +14,22 @@ export const fetchDestinationData = async (domestic, regionId, placeId) => {
       id: doc.id,
       ...doc.data(),
     }));
-    return destinationData[0];
+
+    let destinationPackageRef;
+
+    if(domestic) {
+      destinationPackageRef = collection(db, "domDestinations", regionId, placeId, destinationData[0].id, "packages");
+    } else {
+      destinationPackageRef = collection(db, "intDestinations", regionId, placeId, destinationData[0].id, "packages");
+    }
+
+    const packageQuerySnapshot = await getDocs(destinationPackageRef);
+    const packageData = packageQuerySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    return {destinationData : destinationData[0], packageData};
   } catch (error) {
     console.error("Error fetching destination data:", error);
   }
@@ -109,3 +124,45 @@ export const fetchDomesticCards = async () => {
     console.error("Error fetching domestic cards:", error);
   }
 };
+
+
+// ADMIN
+
+export const fetchDestinationsCount = async () => {
+  try {
+    const internationalDataRef = collection(db, "intDestinations");
+    const domesticDataRef = collection(db, "domDestinations");
+
+    const internationalQuerySnapshot = await getDocs(internationalDataRef);
+    const domesticQuerySnapshot = await getDocs(domesticDataRef);
+
+    const internationalRegions = internationalQuerySnapshot.docs.length;
+    const domesticRegions = domesticQuerySnapshot.docs.length;
+    
+    const internationalDests = internationalQuerySnapshot.docs.map((doc) => {
+      return {
+        id: doc.id,
+        ...doc.data(),
+      }
+    });
+
+    const domesticDests = domesticQuerySnapshot.docs.map((doc) => {
+      return {
+        id: doc.id,
+        ...doc.data(),
+      }
+    });
+
+    const internationalDestCount = internationalDests.reduce((acc, curr) => {
+      return acc + curr.places.length;
+    }, 0);
+
+    const domesticDestCount = domesticDests.reduce((acc, curr) => {
+      return acc + curr.places.length;
+    }, 0);
+
+    return { internationalRegions, domesticRegions, internationalDestCount, domesticDestCount };
+  } catch (error) {
+    console.error("Error fetching destinations count:", error);
+  }
+}

@@ -7,11 +7,11 @@ const MainLayout = () => {
   return (
     <div className="w-full bg-white font-poppins">
       <MainContextProvider>
-      <Header />
-      <div>
-        <Outlet />
-      </div>
-      <Footer />
+        <Header />
+        <div>
+          <Outlet />
+        </div>
+        <Footer />
       </MainContextProvider>
     </div>
   );

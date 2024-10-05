@@ -6,8 +6,11 @@ import { FaAngleDown } from "react-icons/fa";
 import { useMainContext } from "../../contexts/MainContext";
 import ThemeHeader from "./ThemeHeader";
 import DestinationHeader from "./DestinationHeader";
+import { Button, Modal } from "antd";
+import AdminLogin from "../global/AdminLogin";
 
 const Header = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const [showThemes, setShowThemes] = useState(false);
   const [showDestinations, setShowDestinations] = useState(false);
   const data = useMainContext();
@@ -61,11 +64,23 @@ const Header = () => {
               />
             </div>
           </div>
-          <FaUser size={20} color="white" />
+          <Button onClick={() => setIsOpen((prev) => !prev)} type="text">
+            <FaUser size={20} color="white" />
+          </Button>
         </div>
       </div>
+      <Modal open={isOpen} footer={null} onCancel={() => setIsOpen(false)}>
+        <div className="flex flex-col items-center justify-center">
+          <AdminLogin setIsOpen={setIsOpen} />
+        </div>
+      </Modal>
       {showThemes && <ThemeHeader data={data?.themeData} />}
-      {showDestinations && <DestinationHeader IntData={data?.internationalCards} DomData={data?.domesticCards}  />}
+      {showDestinations && (
+        <DestinationHeader
+          IntData={data?.internationalCards}
+          DomData={data?.domesticCards}
+        />
+      )}
     </div>
   );
 };
