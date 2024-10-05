@@ -30,3 +30,16 @@ export const fetchThemePackages = async (themeName) => {
     console.error("Error fetching theme slider data:", error);
   }
 }
+
+// ADMIN
+
+export const fetchThemesCount = async () => {
+  try{
+    const themeCollectionRef = collection(db, "themes");
+    const querySnapshot = await getDocs(themeCollectionRef);
+
+    return querySnapshot.docs.length
+  } catch (error) {
+    console.error("Error fetching theme slider data:", error);
+  }
+}
