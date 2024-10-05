@@ -15,3 +15,16 @@ export const fetchReviewData = async () => {
     console.error("Error fetching slider data:", error);
   }
 }
+
+//ADMIN
+
+export const fetchReviewsCount = async () => {
+  try {
+    const reviewCollectionRef = collection(db, "reviews");
+    const querySnapshot = await getDocs(reviewCollectionRef);
+
+    return querySnapshot.docs.length;
+  } catch (error) {
+    console.error("Error fetching theme slider data:", error);
+  }
+}
