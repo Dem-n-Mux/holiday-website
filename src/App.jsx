@@ -7,6 +7,7 @@ import ThemePage from "./pages/Theme";
 import Careers from "./pages/Careers";
 import DestinationPage from "./pages/Destination";
 import AdminPanel from "./pages/AdminPanel";
+import ReviewPanel from "./pages/AdminReviews";
 
 import MainLayout from "./layout/MainLayout";
 import AuthLayout from "./layout/AuthLayout";
@@ -29,6 +30,7 @@ function App() {
 
             <Route element={<AuthLayout />}>
               <Route path="/admin" element={<AdminPanel />} />
+              <Route path="/admin/reviews" element={<ReviewPanel />} />
             </Route>
           </Routes>
         </AntThemeProvider>
