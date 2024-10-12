@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Table, Button, Modal, Form, Input, message } from 'antd';
+import slugify from 'react-slugify';
 import { addTheme, deleteTheme, updateTheme } from '../../../repository/ThemeRepo';
 import { useNavigate } from 'react-router-dom';
 
@@ -50,7 +51,7 @@ const ThemeListing = ({ data }) => {
         );
         message.success('Theme updated successfully');
       } else {
-        const themeSlug = values.title.toLowerCase();
+        const themeSlug = slugify(values.title);
         values.slug = themeSlug;
         await addTheme(values, themeSlug);
         setThemes((prev) => [...prev, { ...values, id: themeSlug }]);
@@ -109,7 +110,7 @@ const ThemeListing = ({ data }) => {
         <div className='flex flex-col gap-2'>
           <Button type="primary" onClick={() => handleEdit(record)}>Edit</Button>
           <Button type="default" className='bg-red-500 text-white' onClick={() => handleDelete(record.id)}>Delete</Button>
-          <Button type='dashed' onClick={() => navigate(`/admin/packages/${record.id}`)}>Edit Packages</Button>
+          <Button type='dashed' onClick={() => navigate(`/admin/themes/${record.id}`)}>Edit Packages</Button>
         </div>
       ),
     },

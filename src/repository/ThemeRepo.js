@@ -1,4 +1,4 @@
-import { collection, deleteDoc, doc, getDocs, setDoc, updateDoc } from "firebase/firestore";
+import { collection, deleteDoc, doc, addDoc, getDocs, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../config/firebaseConfig";
 
 export const fetchThemeData = async (themeName) => {
@@ -87,5 +87,37 @@ export const deleteTheme = async (id) => {
     console.log("Theme deleted with ID:", id);
   } catch (error) {
     console.error("Error deleting theme:", error);
+  }
+}
+
+
+export const addThemePackage = async (themeName, newPackage) => {
+  try {
+    const themeCollectionRef = collection(db, "themes", themeName, "packages");
+    const docRef = await addDoc(themeCollectionRef, newPackage);
+    console.log("New package added with ID:", docRef.id);
+    return { id: docRef.id, ...newPackage };
+  } catch (error) {
+    console.error("Error adding package:", error);
+  }
+}
+
+export const deleteThemePackage = async (themeName, id) => {
+  try {
+    const docRef = doc(db, "themes", themeName, "packages", id);
+    await deleteDoc(docRef);
+    console.log("Package deleted with ID:", id);
+  } catch (error) {
+    console.error("Error deleting package:", error);
+  }
+}
+
+export const updateThemePackage = async (themeName, id, updatedPackage) => {
+  try {
+    const docRef = doc(db, "themes", themeName, "packages", id);
+    await updateDoc(docRef, updatedPackage);
+    console.log("Package updated with ID:", id);
+  } catch (error) {
+    console.error("Error updating package:", error);
   }
 }
