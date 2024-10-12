@@ -11,6 +11,7 @@ import ReviewPanel from "./pages/AdminReviews";
 
 import MainLayout from "./layout/MainLayout";
 import AuthLayout from "./layout/AuthLayout";
+import ThemesPanel from "./pages/AdminTheme";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
             <Route element={<AuthLayout />}>
               <Route path="/admin" element={<AdminPanel />} />
               <Route path="/admin/reviews" element={<ReviewPanel />} />
+              <Route path="/admin/themes" element={<ThemesPanel />} />
             </Route>
           </Routes>
         </AntThemeProvider>
