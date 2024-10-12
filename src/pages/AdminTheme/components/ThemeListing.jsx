@@ -127,7 +127,7 @@ const ThemeListing = ({ data }) => {
       {/* Modal for Add/Edit */}
       <Modal
         title={isEditMode ? 'Edit Theme' : 'Add Theme'}
-        visible={isModalOpen}
+        open={isModalOpen}
         onOk={handleSubmit}
         onCancel={() => setIsModalOpen(false)}
       >

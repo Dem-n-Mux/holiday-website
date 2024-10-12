@@ -153,7 +153,7 @@ const PackageListing = ({ data, themeName }) => {
       {/* Modal for Add/Edit */}
       <Modal
         title={isEditMode ? "Edit Package" : "Add Package"}
-        visible={isModalOpen}
+        open={isModalOpen}
         onOk={handleSubmit}
         onCancel={() => setIsModalOpen(false)}
       >
