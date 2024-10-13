@@ -166,3 +166,36 @@ export const fetchDestinationsCount = async () => {
     console.error("Error fetching destinations count:", error);
   }
 }
+
+export const fetchSearchBarDestinations = async () => {
+  try {
+    const internationalDestinations = await fetchInternationalCards();
+    const domesticDestinations = await fetchDomesticCards();
+
+    const searchArray = [];
+
+    internationalDestinations.forEach((item) => {
+      item.places.forEach((place) => {
+        searchArray.push({
+          label : place.title,
+          value : "/international/" + item.id + "/" + place.title.toLowerCase()
+        })
+      });
+    })
+
+    domesticDestinations.forEach((item) => {
+      item.places.forEach((place) => {
+        searchArray.push({
+          label : place.title,
+          value : "/domestic/" + item.id + "/" + place.title.toLowerCase()
+        })
+      }) 
+    });
+
+    console.log(searchArray);
+
+    return searchArray;
+  } catch (error) {
+    console.error("Error fetching search bar destinations:", error);
+  }
+}

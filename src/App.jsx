@@ -8,6 +8,9 @@ import Careers from "./pages/Careers";
 import DestinationPage from "./pages/Destination";
 import AdminPanel from "./pages/AdminPanel";
 import ReviewPanel from "./pages/AdminReviews";
+import ThemesPanel from "./pages/AdminTheme";
+import PackagesPanel from "./pages/AdminPackages";
+import AdminTeam from "./pages/AdminTeams";
 
 import MainLayout from "./layout/MainLayout";
 import AuthLayout from "./layout/AuthLayout";
@@ -31,6 +34,9 @@ function App() {
             <Route element={<AuthLayout />}>
               <Route path="/admin" element={<AdminPanel />} />
               <Route path="/admin/reviews" element={<ReviewPanel />} />
+              <Route path="/admin/themes" element={<ThemesPanel />} />
+              <Route path="/admin/themes/:themeId" element={<PackagesPanel />} />
+              <Route path="/admin/team" element={<AdminTeam />} />
             </Route>
           </Routes>
         </AntThemeProvider>

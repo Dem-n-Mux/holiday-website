@@ -12,6 +12,7 @@ import {
   fetchInternationalCards,
   fetchDomesticCards,
   fetchDestinationData,
+  fetchSearchBarDestinations,
 } from "../repository/DestinationRepo";
 
 const MainContext = createContext();
@@ -34,6 +35,7 @@ const MainContextProvider = ({ children }) => {
         const themeSlider = await fetchThemeSlideData();
         const intTrends = await fetchInternationalDests();
         const reviews = await fetchReviewData();
+        const searchResults = await fetchSearchBarDestinations();
         setData({
           slider,
           themeSlider,
@@ -42,6 +44,7 @@ const MainContextProvider = ({ children }) => {
           themeData,
           internationalCards,
           domesticCards,
+          searchResults
         });
       }
 
