@@ -32,7 +32,7 @@ const Header = () => {
             >
               Careers
             </Link>
-            <Link className="font-extralight text-white text-md">Blogs</Link>
+            {/* <Link className="font-extralight text-white text-md">Blogs</Link> */}
             <div
               onClick={() => {
                 if (showDestinations) setShowDestinations(false);
