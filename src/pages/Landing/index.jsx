@@ -15,7 +15,7 @@ const Landing = () => {
 
   return (
     <div className='space-y-16'>
-      <Carousel sliderData={data?.slider} />
+      <Carousel sliderData={data?.slider} searchOptions={data?.searchResults} />
       <HolidayMood data={data?.themeSlider} />
       <TrendInternational data={data?.intTrends} />
       <TrendIndia />
