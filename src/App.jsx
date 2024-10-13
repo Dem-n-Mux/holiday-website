@@ -31,12 +31,12 @@ function App() {
               <Route path="/international/:regionId/:placeId" element={<DestinationPage />} />
             </Route>
 
-            <Route element={<AuthLayout />}>
-              <Route path="/admin" element={<AdminPanel />} />
-              <Route path="/admin/reviews" element={<ReviewPanel />} />
-              <Route path="/admin/themes" element={<ThemesPanel />} />
-              <Route path="/admin/themes/:themeId" element={<PackagesPanel />} />
-              <Route path="/admin/team" element={<AdminTeam />} />
+            <Route path="/admin" element={<AuthLayout />}>
+              <Route index element={<AdminPanel />} />
+              <Route path="reviews" element={<ReviewPanel />} />
+              <Route path="themes" element={<ThemesPanel />} />
+              <Route path="themes/:themeId" element={<PackagesPanel />} />
+              <Route path="team" element={<AdminTeam />} />
             </Route>
           </Routes>
         </AntThemeProvider>
