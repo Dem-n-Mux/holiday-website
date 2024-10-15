@@ -40,7 +40,6 @@ const PackageCard = ({ item, id }) => {
     <div className="flex flex-col gap-4 p-4 border rounded-2xl">
       <div className="flex justify-between items-center">
         <h1 className="text-lg font-playfair font-light">{item.title}</h1>
-        <p className="text-xs px-2 py-1 bg-ash rounded-xl h-fit">{id}</p>
       </div>
       <p className="text-sm h-8">{item.place}</p>
       <div className="grid grid-cols-4 gap-2">

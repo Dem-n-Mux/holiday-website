@@ -14,6 +14,9 @@ import AdminTeam from "./pages/AdminTeams";
 
 import MainLayout from "./layout/MainLayout";
 import AuthLayout from "./layout/AuthLayout";
+import AdminDomestic from "./pages/AdminDomestic";
+import RegionIndex from "./pages/AdminDomestic/RegionIndex";
+import PackageIndex from "./pages/AdminDomestic/PackageIndex";
 
 function App() {
   return (
@@ -31,12 +34,15 @@ function App() {
               <Route path="/international/:regionId/:placeId" element={<DestinationPage />} />
             </Route>
 
-            <Route element={<AuthLayout />}>
-              <Route path="/admin" element={<AdminPanel />} />
-              <Route path="/admin/reviews" element={<ReviewPanel />} />
-              <Route path="/admin/themes" element={<ThemesPanel />} />
-              <Route path="/admin/themes/:themeId" element={<PackagesPanel />} />
-              <Route path="/admin/team" element={<AdminTeam />} />
+            <Route path="/admin" element={<AuthLayout />}>
+              <Route index element={<AdminPanel />} />
+              <Route path="reviews" element={<ReviewPanel />} />
+              <Route path="themes" element={<ThemesPanel />} />
+              <Route path="themes/:themeId" element={<PackagesPanel />} />
+              <Route path="team" element={<AdminTeam />} />
+              <Route path="domestic" element={<AdminDomestic />} />
+              <Route path="domestic/region/:regionId" element={<RegionIndex />} />
+              <Route path="domestic/package/:regionId/:placeId/:docId" element={<PackageIndex />} />
             </Route>
           </Routes>
         </AntThemeProvider>
