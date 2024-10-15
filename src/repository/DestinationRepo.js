@@ -439,3 +439,205 @@ export const updateDomesticPlacePackage = async (
     console.error("Error updating domestic place package :", error);
   }
 };
+
+//ADMIN INTERNATIONAL
+
+export const fetchInternationalRegions = async () => {
+  try {
+    const internationalDataRef = collection(db, "intDestinations");
+    const querySnapshot = await getDocs(internationalDataRef);
+    const destinationData = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    return destinationData;
+  } catch (error) {
+    console.error("Error fetching international regions:", error);
+  }
+};
+
+export const addInternationalRegion = async (data, slug) => {
+  try {
+    const regionRef = doc(db, "intDestinations", slug);
+    await setDoc(regionRef, data);
+    return slug;
+  } catch (error) {
+    console.error("Error adding international region:", error);
+  }
+};
+
+export const deleteInternationalRegion = async (id) => {
+  try {
+    const regionRef = doc(db, "intDestinations", id);
+    await deleteDoc(regionRef);
+  } catch (error) {
+    console.error("Error deleting international region:", error);
+  }
+};
+
+export const fetchInternationalRegionPlaces = async (region) => {
+  try {
+    const docRef = doc(db, "intDestinations", region);
+    const docSnap = await getDoc(docRef);
+
+    if (!docSnap.exists()) {
+      throw new Error("Region not found");
+    }
+
+    const places = docSnap.data().places;
+    const dataArray = [];
+
+    await Promise.all(
+      places.map(async (place) => {
+        const collectionRef = collection(db, "intDestinations", region, place);
+        const querySnapshot = await getDocs(collectionRef);
+        querySnapshot.forEach((doc) => {
+          dataArray.push({ id: doc.id, colRef: place, ...doc.data() });
+        });
+      })
+    );
+
+    return dataArray;
+  } catch (error) {
+    console.error("Error fetching international region places:", error);
+  }
+};
+
+export const updateInternationalPlace = async (id, regionId, colRef, data) => {
+  try {
+    const placeRef = doc(db, "intDestinations", regionId, colRef, id);
+    await updateDoc(placeRef, data);
+  } catch (error) {
+    console.error("Error updating international place:", error);
+  }
+};
+
+export const deleteInternationalPlace = async (id, regionId, colRef) => {
+  try {
+    const regionDocRef = doc(db, "intDestinations", regionId);
+
+    const regionDoc = await getDoc(regionDocRef);
+    if (!regionDoc.exists()) {
+      throw new Error("Region not found");
+    }
+
+    const regionData = regionDoc.data();
+    regionData.places = regionData.places.filter((place) => place !== colRef);
+
+    setDoc(regionDocRef, regionData);
+
+    const placeRef = doc(db, "intDestinations", regionId, colRef, id);
+    await deleteDoc(placeRef);
+  } catch (error) {
+    console.error("Error deleting international place:", error);
+  }
+};
+
+export const addInternationalPlace = async (regionId, slug, data) => {
+  try {
+    const regionDocRef = doc(db, "intDestinations", regionId);
+
+    const regionDoc = await getDoc(regionDocRef);
+    if (!regionDoc.exists()) {
+      throw new Error("Region not found");
+    }
+
+    const regionData = regionDoc.data();
+    regionData.places.push(slug);
+
+    setDoc(regionDocRef, regionData);
+
+    const newPlaceColRef = collection(db, "intDestinations", regionId, slug);
+    const newPlace = await addDoc(newPlaceColRef, data);
+
+    return newPlace.id;
+  } catch (error) {
+    console.error("Error adding international place :", error);
+  }
+};
+
+export const fetchInternationalPlacePackage = async (regionId, placeId, docId) => {
+  try {
+    const collectionRef = collection(
+      db,
+      "intDestinations",
+      regionId,
+      placeId,
+      docId,
+      "packages"
+    );
+    const querySnapshot = await getDocs(collectionRef);
+    const packageData = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    return packageData;
+  } catch (error) {
+    console.error("Error fetching international place package:", error);
+  }
+};
+
+export const addInternationalPlacePackage = async (
+  regionId,
+  placeId,
+  docId,
+  data
+) => {
+  try {
+    const placeDocRef = collection(
+      db,
+      "intDestinations",
+      regionId,
+      placeId,
+      docId,
+      "packages"
+    );
+    const docref = await addDoc(placeDocRef, data);
+    
+    return docref.id;
+  } catch (error) {
+    console.error("Error adding international place package :", error);
+  }
+};
+
+export const deleteInternationalPlacePackage = async (id, regionId, placeId, docId) => {
+  try {
+    const placeDocRef = doc(
+      db,
+      "intDestinations",
+      regionId,
+      placeId,
+      docId,
+      "packages",
+      id
+    );
+    await deleteDoc(placeDocRef);
+  } catch (error) {
+    console.error("Error deleting international place package :", error);
+  }
+};
+
+export const updateInternationalPlacePackage = async (
+  id,
+  regionId,
+  placeId,
+  docId,
+  data
+) => {
+  try {
+    const placeDocRef = doc(
+      db,
+      "intDestinations",
+      regionId,
+      placeId,
+      docId,
+      "packages",
+      id
+    );
+    await updateDoc(placeDocRef, data);
+  } catch (error) {
+    console.error("Error updating international place package :", error);
+  }
+};
