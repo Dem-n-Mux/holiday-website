@@ -1,13 +1,33 @@
-import { collection, getDocs } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  doc,
+  addDoc,
+  setDoc,
+  deleteDoc,
+  getDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { db } from "../config/firebaseConfig";
+import { data } from "autoprefixer";
 
 export const fetchDestinationData = async (domestic, regionId, placeId) => {
   try {
     let destinationCollectionRef;
     if (domestic) {
-      destinationCollectionRef = collection(db, "domDestinations", regionId, placeId);
+      destinationCollectionRef = collection(
+        db,
+        "domDestinations",
+        regionId,
+        placeId
+      );
     } else {
-      destinationCollectionRef = collection(db, "intDestinations", regionId, placeId);
+      destinationCollectionRef = collection(
+        db,
+        "intDestinations",
+        regionId,
+        placeId
+      );
     }
     const querySnapshot = await getDocs(destinationCollectionRef);
     const destinationData = querySnapshot.docs.map((doc) => ({
@@ -17,10 +37,24 @@ export const fetchDestinationData = async (domestic, regionId, placeId) => {
 
     let destinationPackageRef;
 
-    if(domestic) {
-      destinationPackageRef = collection(db, "domDestinations", regionId, placeId, destinationData[0].id, "packages");
+    if (domestic) {
+      destinationPackageRef = collection(
+        db,
+        "domDestinations",
+        regionId,
+        placeId,
+        destinationData[0].id,
+        "packages"
+      );
     } else {
-      destinationPackageRef = collection(db, "intDestinations", regionId, placeId, destinationData[0].id, "packages");
+      destinationPackageRef = collection(
+        db,
+        "intDestinations",
+        regionId,
+        placeId,
+        destinationData[0].id,
+        "packages"
+      );
     }
 
     const packageQuerySnapshot = await getDocs(destinationPackageRef);
@@ -29,11 +63,11 @@ export const fetchDestinationData = async (domestic, regionId, placeId) => {
       ...doc.data(),
     }));
 
-    return {destinationData : destinationData[0], packageData};
+    return { destinationData: destinationData[0], packageData };
   } catch (error) {
     console.error("Error fetching destination data:", error);
   }
-}
+};
 
 export const fetchInternationalCards = async () => {
   try {
@@ -125,7 +159,6 @@ export const fetchDomesticCards = async () => {
   }
 };
 
-
 // ADMIN
 
 export const fetchDestinationsCount = async () => {
@@ -138,19 +171,19 @@ export const fetchDestinationsCount = async () => {
 
     const internationalRegions = internationalQuerySnapshot.docs.length;
     const domesticRegions = domesticQuerySnapshot.docs.length;
-    
+
     const internationalDests = internationalQuerySnapshot.docs.map((doc) => {
       return {
         id: doc.id,
         ...doc.data(),
-      }
+      };
     });
 
     const domesticDests = domesticQuerySnapshot.docs.map((doc) => {
       return {
         id: doc.id,
         ...doc.data(),
-      }
+      };
     });
 
     const internationalDestCount = internationalDests.reduce((acc, curr) => {
@@ -161,11 +194,16 @@ export const fetchDestinationsCount = async () => {
       return acc + curr.places.length;
     }, 0);
 
-    return { internationalRegions, domesticRegions, internationalDestCount, domesticDestCount };
+    return {
+      internationalRegions,
+      domesticRegions,
+      internationalDestCount,
+      domesticDestCount,
+    };
   } catch (error) {
     console.error("Error fetching destinations count:", error);
   }
-}
+};
 
 export const fetchSearchBarDestinations = async () => {
   try {
@@ -177,19 +215,19 @@ export const fetchSearchBarDestinations = async () => {
     internationalDestinations.forEach((item) => {
       item.places.forEach((place) => {
         searchArray.push({
-          label : place.title,
-          value : "/international/" + item.id + "/" + place.title.toLowerCase()
-        })
+          label: place.title,
+          value: "/international/" + item.id + "/" + place.title.toLowerCase(),
+        });
       });
-    })
+    });
 
     domesticDestinations.forEach((item) => {
       item.places.forEach((place) => {
         searchArray.push({
-          label : place.title,
-          value : "/domestic/" + item.id + "/" + place.title.toLowerCase()
-        })
-      }) 
+          label: place.title,
+          value: "/domestic/" + item.id + "/" + place.title.toLowerCase(),
+        });
+      });
     });
 
     console.log(searchArray);
@@ -198,4 +236,206 @@ export const fetchSearchBarDestinations = async () => {
   } catch (error) {
     console.error("Error fetching search bar destinations:", error);
   }
-}
+};
+
+//ADMIN DOMESTIC
+
+export const fetchDomesticRegionPlaces = async (region) => {
+  try {
+    const docRef = doc(db, "domDestinations", region);
+    const docSnap = await getDoc(docRef);
+
+    if (!docSnap.exists()) {
+      throw new Error("Region not found");
+    }
+
+    const places = docSnap.data().places;
+    const dataArray = [];
+
+    await Promise.all(
+      places.map(async (place) => {
+        const collectionRef = collection(db, "domDestinations", region, place);
+        const querySnapshot = await getDocs(collectionRef);
+        querySnapshot.forEach((doc) => {
+          dataArray.push({ id: doc.id, colRef: place, ...doc.data() });
+        });
+      })
+    );
+
+    return dataArray;
+  } catch (error) {
+    console.error("Error fetching domestic region places:", error);
+  }
+};
+
+export const fetchDomesticRegions = async () => {
+  try {
+    const domesticDataRef = collection(db, "domDestinations");
+    const querySnapshot = await getDocs(domesticDataRef);
+    const destinationData = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    return destinationData;
+  } catch (error) {
+    console.error("Error fetching domestic regions:", error);
+  }
+};
+
+export const fetchDomesticPlacePackage = async (regionId, placeId, docId) => {
+  try {
+    const collectionRef = collection(
+      db,
+      "domDestinations",
+      regionId,
+      placeId,
+      docId,
+      "packages"
+    );
+    const querySnapshot = await getDocs(collectionRef);
+    const packageData = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    return packageData;
+  } catch (error) {
+    console.error("Error fetching domestic place package:", error);
+  }
+};
+
+export const addDomesticRegion = async (data, slug) => {
+  try {
+    const regionRef = doc(db, "domDestinations", slug);
+    await setDoc(regionRef, data);
+    return slug;
+  } catch (error) {
+    console.error("Error adding domestic region:", error);
+  }
+};
+
+export const deleteDomesticRegion = async (id) => {
+  try {
+    const regionRef = doc(db, "domDestinations", id);
+    await deleteDoc(regionRef);
+  } catch (error) {
+    console.error("Error deleting domestic region:", error);
+  }
+};
+
+export const updateDomesticPlace = async (id, regionId, colRef, data) => {
+  try {
+    const placeRef = doc(db, "domDestinations", regionId, colRef, id);
+    await updateDoc(placeRef, data);
+  } catch (error) {
+    console.error("Error updating domestic place:", error);
+  }
+};
+
+export const deleteDomesticPlace = async (id, regionId, colRef) => {
+  try {
+    const regionDocRef = doc(db, "domDestinations", regionId);
+
+    const regionDoc = await getDoc(regionDocRef);
+    if (!regionDoc.exists()) {
+      throw new Error("Region not found");
+    }
+
+    const regionData = regionDoc.data();
+    regionData.places = regionData.places.filter((place) => place !== colRef);
+
+    setDoc(regionDocRef, regionData);
+
+    const placeRef = doc(db, "domDestinations", regionId, colRef, id);
+    await deleteDoc(placeRef);
+  } catch (error) {
+    console.error("Error deleting domestic place:", error);
+  }
+};
+
+export const addDomesticPlace = async (regionId, slug, data) => {
+  try {
+    const regionDocRef = doc(db, "domDestinations", regionId);
+
+    const regionDoc = await getDoc(regionDocRef);
+    if (!regionDoc.exists()) {
+      throw new Error("Region not found");
+    }
+
+    const regionData = regionDoc.data();
+    regionData.places.push(slug);
+
+    setDoc(regionDocRef, regionData);
+
+    const newPlaceColRef = collection(db, "domDestinations", regionId, slug);
+    const newPlace = await addDoc(newPlaceColRef, data);
+
+    return newPlace.id;
+  } catch (error) {
+    console.error("Error adding domestic place :", error);
+  }
+};
+
+export const addDomesticPlacePackage = async (
+  regionId,
+  placeId,
+  docId,
+  data
+) => {
+  try {
+    const placeDocRef = collection(
+      db,
+      "domDestinations",
+      regionId,
+      placeId,
+      docId,
+      "packages"
+    );
+    const docref = await addDoc(placeDocRef, data);
+    
+    return docref.id;
+  } catch (error) {
+    console.error("Error adding domestic place package :", error);
+  }
+};
+
+export const deleteDomesticPlacePackage = async (id, regionId, placeId, docId) => {
+  try {
+    const placeDocRef = doc(
+      db,
+      "domDestinations",
+      regionId,
+      placeId,
+      docId,
+      "packages",
+      id
+    );
+    await deleteDoc(placeDocRef);
+  } catch (error) {
+    console.error("Error deleting domestic place package :", error);
+  }
+};
+
+export const updateDomesticPlacePackage = async (
+  id,
+  regionId,
+  placeId,
+  docId,
+  data
+) => {
+  try {
+    const placeDocRef = doc(
+      db,
+      "domDestinations",
+      regionId,
+      placeId,
+      docId,
+      "packages",
+      id
+    );
+    await updateDoc(placeDocRef, data);
+  } catch (error) {
+    console.error("Error updating domestic place package :", error);
+  }
+};
