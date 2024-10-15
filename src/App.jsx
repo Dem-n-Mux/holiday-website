@@ -17,6 +17,9 @@ import AuthLayout from "./layout/AuthLayout";
 import AdminDomestic from "./pages/AdminDomestic";
 import RegionIndex from "./pages/AdminDomestic/RegionIndex";
 import PackageIndex from "./pages/AdminDomestic/PackageIndex";
+import AdminInternational from "./pages/AdminInternational";
+import IntRegionIndex from "./pages/AdminInternational/IntRegionIndex";
+import IntPackageIndex from "./pages/AdminInternational/IntPackageIndex";
 
 function App() {
   return (
@@ -41,8 +44,11 @@ function App() {
               <Route path="themes/:themeId" element={<PackagesPanel />} />
               <Route path="team" element={<AdminTeam />} />
               <Route path="domestic" element={<AdminDomestic />} />
+              <Route path="international" element={<AdminInternational />} />
               <Route path="domestic/region/:regionId" element={<RegionIndex />} />
+              <Route path="international/region/:regionId" element={<IntRegionIndex />} />
               <Route path="domestic/package/:regionId/:placeId/:docId" element={<PackageIndex />} />
+              <Route path="international/package/:regionId/:placeId/:docId" element={<IntPackageIndex />} />
             </Route>
           </Routes>
         </AntThemeProvider>
